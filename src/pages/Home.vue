@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <div class="title">
+    <div class="title">
       <h1><i class="fa fa-braille"></i> In Stock</h1>
-    </div> -->
+    </div>
     <product-list></product-list>
   </div>
 </template>
@@ -22,6 +22,7 @@
   }
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

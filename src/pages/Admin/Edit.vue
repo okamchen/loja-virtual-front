@@ -11,15 +11,13 @@
   export default {
     created () {
       if (!this.model.name) {
-        console.log('dispatched')
         this.$store.dispatch('productById', this.$route.params['id'])
       }
-      if (this.manufacturers.length === 0) {
-        this.$store.dispatch('allManufacturers')
-      }
+      // if (this.manufacturers.length === 0) {
+        // this.$store.dispatch('allManufacturers')
+      // }
     },
     data () {
-      console.log(this.$store.getters.allManufacturers)
 //      const productById = this.$store.getters.productById(this.$route.params['id'])
       return {
 //        model: {}
@@ -27,9 +25,9 @@
       }
     },
     computed: {
-      manufacturers () {
-        return this.$store.getters.allManufacturers
-      },
+      // manufacturers () {
+      //   return this.$store.getters.allManufacturers
+      // },
       model () {
         const productById = this.$store.getters.productById(this.$route.params['id'])
         return Object.assign({}, productById)

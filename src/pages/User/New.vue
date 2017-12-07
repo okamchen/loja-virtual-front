@@ -1,31 +1,22 @@
 <template>
-  <product-form @save-product="addProduct" :model="model" :manufacturers="manufacturers"></product-form>
+  <user-form @save-user="addUser" :model="model"></user-form>
 </template>
 
 <script>
-  import ProductFrom from '../../components/product/ProductForm.vue'
+  import UserFrom from '../../components/user/UserForm.vue'
   export default {
     data () {
       return {
         model: {}
       }
     },
-    created () {
-      this.$store.dispatch('allManufacturers')
-    },
-    computed: {
-      manufacturers () {
-        return this.$store.getters.allManufacturers
-      }
-    },
     methods: {
-      addProduct (model) {
-        console.log('model', model)
-        this.$store.dispatch('addProduct', model)
+      addUser (model) {
+        this.$store.dispatch('addUser', model)
       }
     },
     components: {
-      'product-form': ProductFrom
+      'user-form': UserFrom
     }
   }
 </script>

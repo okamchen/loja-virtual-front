@@ -3,25 +3,34 @@
     <div class="product">
       <router-link :to="'/details/'+product.id" class="product-link">
         <div class="product__image">
-          <img class="img-responsive" :src="product.image" alt="">
+          <img
+            class="img-responsive" :src="product.imageUrl" alt="">
         </div>
         <div class="product__description">
           <div class="product__info">
-            <h4>{{product.nome}}</h4>
+            <!-- <small>{{product.category.name}}</small> -->
+            <h4>{{product.name}}</h4>
           </div>
           <div class="product__price-cart">
-            ${{product.preco}}
+            ${{product.price}}
           </div>
         </div>
       </router-link>
+      <div class="product__action">
+        <product-button :product="product"></product-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import ProductButton from './ProductButton.vue'
   export default {
     name: 'product-item',
-    props: ['product']
+    props: ['product'],
+    components: {
+      'product-button': ProductButton
+    }
   }
 </script>
 
@@ -33,9 +42,18 @@
     overflow: hidden;
   }
 
+  .product .product__description,
+  .product .product__action {
+    transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) transform;
+  }
+
+  .product:hover .product__description {
+    transform: translateY(-40px);
+  }
+
   .product:hover .product__action {
     transform: none;
-  } */
+  }
 
   .product-link {
     display: block;

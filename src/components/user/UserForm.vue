@@ -1,28 +1,27 @@
 <template>
-  <form @submit.prevent="saveProduct">
+  <form @submit.prevent="saveUser">
     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
       <div class="form-group">
-        <label>Name</label>
+        <label>Nome</label>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Nome"
           v-model="model.name"
           v-validate="'required'"
           name="name"
           :class="{'form-control': true, 'error': errors.has('name') }" />
-        <span class="small text-danger" v-show="errors.has('name')">Name is required</span>
+        <span class="small text-danger" v-show="errors.has('name')">Nome é obrigatório</span>
       </div>
       <div class="form-group">
-        <label>Price</label>
+        <label>Perfil</label>
         <input
-          type="number"
-          class="form-control"
-          placeholder="Price"
-          v-model="model.price"
+          type="text"
+          placeholder="Perfil"
+          v-model="model.type"
           v-validate="'required'"
-          name="price"
-          :class="{'form-control': true, 'error': errors.has('price') }" />
-        <span class="small text-danger" v-show="errors.has('price')">Price is required</span>
+          name="type"
+          :class="{'form-control': true, 'error': errors.has('type') }" />
+        <span class="small text-danger" v-show="errors.has('type')">Perfil é obrigatório</span>
       </div>
       <!-- <div class="form-group">
 
@@ -53,26 +52,13 @@
           v-validate="'required|url'"
           name="image"
           :class="{'form-control': true, 'error': errors.has('image') }" />
-        <span class="small text-danger" v-show="errors.has('image')">Image is required and must be a valid URL</span>
-      </div>
-      <div class="form-group">
-        <label>Description</label>
-        <textarea
-          type="number"
-          class="form-control"
-          placeholder="Description"
-          rows="5"
-          v-model="model.description"
-          v-validate="'required'"
-          name="description"
-          :class="{'form-control': true, 'error': errors.has('description') }"></textarea>
-        <span class="small text-danger" v-show="errors.has('description')">Description is required</span>
+        <span class="small text-danger" v-show="errors.has('image')">Imagem é obrigatório e URL deve ser válida</span>
       </div>
       <div class="form-group new-button">
         <button class="button">
           <i class="fa fa-pencil"></i>
-          <span v-if="isEditing">Update Product</span>
-          <span v-else>Add Product</span>
+          <span v-if="isEditing">Salvar</span>
+          <span v-else>Adicionar</span>
         </button>
       </div>
     </div>
@@ -84,19 +70,20 @@
     ERROR_MSG
   } from '../../store/mutation-types'
   export default {
+    // props: ['model', 'manufacturers', 'isEditing'],
     props: ['model', 'isEditing'],
     created () {
 
     },
     methods: {
-      saveProduct () {
+      saveUser () {
         this.$validator.validateAll().then(() => {
-          this.$emit('save-product', this.model)
+          this.$emit('save-user', this.model)
         }).catch(() => {
           this.$store.commit(ERROR_MSG, {
             type: 'error',
             title: 'Validation!',
-            content: 'Please ensure the form is valid.'
+            content: 'Certifique-se de que o formulário seja válido.'
           })
         })
       }

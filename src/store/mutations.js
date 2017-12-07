@@ -7,16 +7,25 @@ import {
   UPDATE_PRODUCT_SUCCESS,
   REMOVE_PRODUCT,
   REMOVE_PRODUCT_SUCCESS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
   ALL_PRODUCTS,
   ALL_PRODUCTS_SUCCESS,
+  ERROR_MSG,
+  USER_BY_ID,
+  USER_BY_ID_SUCCESS,
+  UPDATE_USER,
+  UPDATE_USER_SUCCESS,
+  REMOVE_USER,
+  REMOVE_USER_SUCCESS,
   ALL_USERS,
-  ALL_USERS_SUCCESS,
-  ERROR_MSG
+  ALL_USERS_SUCCESS
 } from './mutation-types'
 
 export const productMutations = {
   [ALL_PRODUCTS] (state) {
     state.showLoader = true
+    // this[]
   },
   [ALL_PRODUCTS_SUCCESS] (state, payload) {
     state.showLoader = false
@@ -61,6 +70,15 @@ export const productMutations = {
   [ERROR_MSG] (state, payload) {}
 }
 
+export const cartMutations = {
+  [ADD_TO_CART]: (state, payload) => state.cart.push(payload),
+  [REMOVE_FROM_CART]: (state, payload) => {
+    const index = state.cart.findIndex(p => p._id === payload)
+    state.cart.splice(index, 1)
+    console.log(state.cart, state.cart.length, index)
+  }
+}
+
 export const userMutations = {
   [ALL_USERS] (state) {
     state.showLoader = true
@@ -68,5 +86,35 @@ export const userMutations = {
   [ALL_USERS_SUCCESS] (state, payload) {
     state.showLoader = false
     state.users = payload
-  }
+  },
+  [USER_BY_ID] (state) {
+    state.showLoader = true
+  },
+  [USER_BY_ID_SUCCESS] (state, payload) {
+    state.showLoader = false
+    state.user = payload
+  },
+  [UPDATE_USER]: (state, payload) => {
+    state.showLoader = true
+  },
+  [UPDATE_USER_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.users = state.users.map(p => {
+      if (p.id === payload.id) {
+        payload = {...payload}
+        return payload
+      }
+      return p
+    })
+  },
+  [REMOVE_USER]: (state, payload) => {
+    state.showLoader = true
+  },
+  [REMOVE_USER_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    const index = state.users.findIndex(p => p._id === payload)
+    console.debug('index', index)
+    state.products.splice(index, 1)
+  },
+  [ERROR_MSG] (state, payload) {}
 }

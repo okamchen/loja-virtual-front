@@ -16,6 +16,7 @@
           </div>
           <div class="product-details__price-cart">
             <p>${{product.price}}</p>
+            <product-button :product="product"></product-button>
           </div>
         </div>
       </div>
@@ -24,8 +25,12 @@
 </template>
 
 <script>
+  import ProductButton from './ProductButton'
   export default {
-    props: ['product']
+    props: ['product'],
+    components: {
+      'product-button': ProductButton
+    }
   }
 </script>
 
@@ -33,6 +38,10 @@
   .product-details {
     border-bottom: 2px solid #F5F5F5;
     padding: 30px 0;
+  }
+
+  .product-details__image {
+
   }
 
   .product-details__description {
