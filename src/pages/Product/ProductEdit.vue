@@ -2,7 +2,7 @@
   <product-form
     @save-product="updateProduct"
     :model="model"
-    :manufacturers="manufacturers"
+    :categories="categories"
     :isEditing="true"></product-form>
 </template>
 
@@ -13,21 +13,18 @@
       if (!this.model.name) {
         this.$store.dispatch('productById', this.$route.params['id'])
       }
-      // if (this.manufacturers.length === 0) {
-        // this.$store.dispatch('allManufacturers')
-      // }
+      if (this.categories.length === 0) {
+        this.$store.dispatch('allCategories')
+      }
     },
     data () {
-//      const productById = this.$store.getters.productById(this.$route.params['id'])
       return {
-//        model: {}
-//        model: this.$store.getters.productById(this.$route.params['id'])
       }
     },
     computed: {
-      // manufacturers () {
-      //   return this.$store.getters.allManufacturers
-      // },
+      categories () {
+        return this.$store.getters.allCategories
+      },
       model () {
         const productById = this.$store.getters.productById(this.$route.params['id'])
         return Object.assign({}, productById)
@@ -35,7 +32,6 @@
     },
     methods: {
       updateProduct (model) {
-        console.log('model', model)
         this.$store.dispatch('updateProduct', model)
       }
     },

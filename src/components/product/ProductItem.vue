@@ -3,12 +3,11 @@
     <div class="product">
       <router-link :to="'/details/'+product.id" class="product-link">
         <div class="product__image">
-          <img
-            class="img-responsive" :src="product.imageUrl" alt="">
+          <img class="img-responsive" :src="product.imageUrl" alt="">
         </div>
         <div class="product__description">
           <div class="product__info">
-            <!-- <small>{{product.category.name}}</small> -->
+            <small>{{product.category.name}}</small>
             <h4>{{product.name}}</h4>
           </div>
           <div class="product__price-cart">

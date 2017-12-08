@@ -21,7 +21,9 @@ import {
   REMOVE_USER,
   REMOVE_USER_SUCCESS,
   ALL_USERS,
-  ALL_USERS_SUCCESS
+  ALL_USERS_SUCCESS,
+  ALL_CATEGORIES,
+  ALL_CATEGORIES_SUCCESS
 } from './mutation-types'
 
 let GET_CORS = {
@@ -44,6 +46,19 @@ let POST_CORS = {
   }
 }
 
+let PUT_CORS = {
+  type: 'PUT',
+  // crossdomain: true,
+  // dataType: 'jsonp',
+  headers: {
+    // 'Accept': 'application/json; charset=utf-8',
+    // 'Content-Type': 'application/json; charset=utf-8',
+    // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    // 'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
+    'Content-Type': 'application/json'
+  }
+}
+
 export const productActions = {
   allProducts ({commit}) {
     commit(ALL_PRODUCTS)
@@ -53,27 +68,25 @@ export const productActions = {
   },
   productById ({commit}, payload) {
     commit(PRODUCT_BY_ID)
-    axios.get(`${API_BASE}/product/${payload}`).then(response => {
-      console.log(payload, response.data)
+    axios.get(`${API_BASE}/product/${payload}`, GET_CORS).then(response => {
       commit(PRODUCT_BY_ID_SUCCESS, response.data)
     })
   },
   addProduct ({commit}, payload) {
     commit(ADD_PRODUCT)
-    axios.post(`${API_BASE}/product`, payload, POST_CORS).then(response => {
+    axios.post(`${API_BASE}/product`, POST_CORS, payload).then(response => {
       commit(ADD_PRODUCT_SUCCESS, response.data)
     })
   },
   updateProduct ({commit}, payload) {
     commit(UPDATE_PRODUCT)
-    axios.put(`${API_BASE}/product/${payload._id}`, payload).then(response => {
+    axios.put(`${API_BASE}/product/${payload.id}`, payload, PUT_CORS).then(response => {
       commit(UPDATE_PRODUCT_SUCCESS, response.data)
     })
   },
   removeProduct ({commit}, payload) {
     commit(REMOVE_PRODUCT)
     axios.delete(`${API_BASE}/product/${payload}`, payload).then(response => {
-      console.debug('response', response.data)
       commit(REMOVE_PRODUCT_SUCCESS, response.data)
     })
   }
@@ -108,6 +121,15 @@ export const userActions = {
     commit(REMOVE_USER)
     axios.delete(`${API_BASE}/user/${payload}`, payload).then(response => {
       commit(REMOVE_USER_SUCCESS, response.data)
+    })
+  }
+}
+
+export const categoryActions = {
+  allCategories ({commit}) {
+    commit(ALL_CATEGORIES)
+    axios.get(`${API_BASE}/category`, GET_CORS).then(response => {
+      commit(ALL_CATEGORIES_SUCCESS, response.data)
     })
   }
 }

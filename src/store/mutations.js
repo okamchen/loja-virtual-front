@@ -19,13 +19,14 @@ import {
   REMOVE_USER,
   REMOVE_USER_SUCCESS,
   ALL_USERS,
-  ALL_USERS_SUCCESS
+  ALL_USERS_SUCCESS,
+  ALL_CATEGORIES,
+  ALL_CATEGORIES_SUCCESS
 } from './mutation-types'
 
 export const productMutations = {
   [ALL_PRODUCTS] (state) {
     state.showLoader = true
-    // this[]
   },
   [ALL_PRODUCTS_SUCCESS] (state, payload) {
     state.showLoader = false
@@ -51,8 +52,8 @@ export const productMutations = {
   [UPDATE_PRODUCT_SUCCESS]: (state, payload) => {
     state.showLoader = false
     state.products = state.products.map(p => {
-      if (p._id === payload._id) {
-        payload = {...payload, manufacturer: state.manufacturers.filter(x => x._id === payload.manufacturer)[0]}
+      if (p.id === parseInt(payload.id)) {
+        payload = {...payload, category: state.categories.filter(x => x.id === parseInt(payload.category.id))[0]}
         return payload
       }
       return p
@@ -63,8 +64,7 @@ export const productMutations = {
   },
   [REMOVE_PRODUCT_SUCCESS]: (state, payload) => {
     state.showLoader = false
-    const index = state.products.findIndex(p => p._id === payload)
-    console.debug('index', index)
+    const index = state.products.findIndex(p => p.id === parseInt(payload))
     state.products.splice(index, 1)
   },
   [ERROR_MSG] (state, payload) {}
@@ -73,9 +73,8 @@ export const productMutations = {
 export const cartMutations = {
   [ADD_TO_CART]: (state, payload) => state.cart.push(payload),
   [REMOVE_FROM_CART]: (state, payload) => {
-    const index = state.cart.findIndex(p => p._id === payload)
+    const index = state.cart.findIndex(p => p.id === parseInt(payload))
     state.cart.splice(index, 1)
-    console.log(state.cart, state.cart.length, index)
   }
 }
 
@@ -100,7 +99,7 @@ export const userMutations = {
   [UPDATE_USER_SUCCESS]: (state, payload) => {
     state.showLoader = false
     state.users = state.users.map(p => {
-      if (p.id === payload.id) {
+      if (p.id === parseInt(payload.id)) {
         payload = {...payload}
         return payload
       }
@@ -112,9 +111,18 @@ export const userMutations = {
   },
   [REMOVE_USER_SUCCESS]: (state, payload) => {
     state.showLoader = false
-    const index = state.users.findIndex(p => p._id === payload)
-    console.debug('index', index)
+    const index = state.users.findIndex(p => p.id === parseInt(payload))
     state.products.splice(index, 1)
   },
   [ERROR_MSG] (state, payload) {}
+}
+
+export const categoryMutations = {
+  [ALL_CATEGORIES] (state) {
+    state.showLoader = true
+  },
+  [ALL_CATEGORIES_SUCCESS] (state, payload) {
+    state.showLoader = false
+    state.categories = payload
+  }
 }

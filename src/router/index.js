@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import HomeRoutes from './home'
-import AdminRoutes from './admin'
+import AdminRoutes from './product'
 import UserRoutes from './user'
 import DetailsRoutes from './details'
 import CartRoutes from './cart'

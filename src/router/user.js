@@ -1,16 +1,16 @@
-import Index from '@/pages/User/Index'
-import New from '@/pages/User/New'
+import UserIndex from '@/pages/User/UserIndex'
+import UserNew from '@/pages/User/UserNew'
 import Users from '@/pages/User/Users'
-import Edit from '@/pages/User/Edit'
+import UserEdit from '@/pages/User/UserEdit'
 
 export default {
   path: '/user',
-  component: Index,
+  component: UserIndex,
   children: [
     {
       path: 'new',
-      name: 'New',
-      component: New
+      name: 'UserNew',
+      component: UserNew
     },
     {
       path: '',
@@ -19,8 +19,8 @@ export default {
     },
     {
       path: 'edit/:id',
-      name: 'Edit',
-      component: Edit
+      name: 'EditUser',
+      component: UserEdit
     }
   ]
 }

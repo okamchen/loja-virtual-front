@@ -1,0 +1,39 @@
+<template>
+  <product-form 
+    @save-product="addProduct" 
+    :categories="categories"
+    :model="model">
+  </product-form>
+</template>
+
+<script>
+  import ProductFrom from '../../components/product/ProductForm.vue'
+  export default {
+    data () {
+      return {
+      }
+    },
+    created () {
+      this.$store.dispatch('allCategories')
+      if (this.categories.length === 0) {
+        this.$store.dispatch('allCategories')
+      }
+    },
+    computed: {
+      categories () {
+        return this.$store.getters.allCategories
+      },
+      model () {
+        return Object.assign({})
+      }
+    },
+    methods: {
+      addProduct (model) {
+        this.$store.dispatch('addProduct', model)
+      }
+    },
+    components: {
+      'product-form': ProductFrom
+    }
+  }
+</script>

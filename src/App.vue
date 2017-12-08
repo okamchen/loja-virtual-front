@@ -4,7 +4,8 @@
       <div class="container">
         <ul class="nav__left">
           <li><router-link to="/"><i class="fa fa-home"></i> Home</router-link></li>
-          <li><router-link to="/admin"><i class="fa fa-user"></i> Admin</router-link></li>
+          <li><router-link to="/product"><i class="fa fa-user"></i> Produtos</router-link></li>
+          <li><router-link to="/user"><i class="fa fa-user"></i> Usuario</router-link></li>
         </ul>
         <ul class="nav__right">
           <li><router-link to="/cart"><i class="fa fa-shopping-cart"></i> Cart ({{cartItemsCount}})</router-link></li>
@@ -46,13 +47,13 @@ export default {
             toastr.error(mutation.payload.content, mutation.payload.title)
             break
           case ADD_PRODUCT_SUCCESS:
-            toastr.success('Product created.', 'Success!')
+            toastr.success('Produto criado com sucesso.', 'Sucesso!')
             break
           case UPDATE_PRODUCT_SUCCESS:
-            toastr.success('Product updated.', 'Success!')
+            toastr.success('Produto alterado com sucesso.', 'Sucesso!')
             break
           case REMOVE_PRODUCT_SUCCESS:
-            toastr.warning('Product deleted.', 'Deleted!')
+            toastr.warning('Produto removido.', 'Removido!')
             break
         }
       }

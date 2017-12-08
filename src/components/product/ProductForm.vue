@@ -2,7 +2,7 @@
   <form @submit.prevent="saveProduct">
     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
       <div class="form-group">
-        <label>Name</label>
+        <label>Nome</label>
         <input
           type="text"
           placeholder="Name"
@@ -10,50 +10,50 @@
           v-validate="'required'"
           name="name"
           :class="{'form-control': true, 'error': errors.has('name') }" />
-        <span class="small text-danger" v-show="errors.has('name')">Name is required</span>
+        <span class="small text-danger" v-show="errors.has('name')">Nome é obrigatório</span>
       </div>
       <div class="form-group">
-        <label>Price</label>
+        <label>Preço</label>
         <input
           type="number"
+          step="0.01"
           class="form-control"
           placeholder="Price"
           v-model="model.price"
           v-validate="'required'"
           name="price"
           :class="{'form-control': true, 'error': errors.has('price') }" />
-        <span class="small text-danger" v-show="errors.has('price')">Price is required</span>
+        <span class="small text-danger" v-show="errors.has('price')">Preço é obrigatório</span>
       </div>
-      <!-- <div class="form-group">
-
-        <label>Manufacturer</label>
+      <div class="form-group">
+        <label>Categoria</label>
         <select
           type="text"
           class="form-control"
-          v-model="model.manufacturer"
+          v-model="model.category"
           v-validate="'required'"
-          name="manufacturer"
-          :class="{'form-control': true, 'error': errors.has('manufacturer') }">
-          <template v-for="manufacturer in manufacturers">
-            <option :value="manufacturer._id" :selected="manufacturer._id == (model.manufacturer && model.manufacturer._id)">{{manufacturer.name}}</option>
+          name="category"
+          :class="{'form-control': true, 'error': errors.has('category') }">
+          <template v-for="category in categories">
+            <option :value="category">{{category.name}}</option>
           </template>
         </select>
-        <span class="small text-danger" v-show="errors.has('manufacturer')">Manufacturer is required</span>
-      </div> -->
+        <span class="small text-danger" v-show="errors.has('manufacturer')">Categoria é obrigatório</span>
+      </div>
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
       <div class="form-group">
-        <label>Image</label>
+        <label>Imagem</label>
         <input
           type="text"
           lass="form-control"
-          placeholder="Image"
-          v-model="model.image"
+          placeholder="Imagem"
+          v-model="model.imageUrl"
           v-validate="'required|url'"
-          name="image"
-          :class="{'form-control': true, 'error': errors.has('image') }" />
-        <span class="small text-danger" v-show="errors.has('image')">Image is required and must be a valid URL</span>
+          name="imageUrl"
+          :class="{'form-control': true, 'error': errors.has('imageUrl') }" />
+        <span class="small text-danger" v-show="errors.has('imageUrl')">Image is required and must be a valid URL</span>
       </div>
       <div class="form-group">
         <label>Description</label>
@@ -84,7 +84,7 @@
     ERROR_MSG
   } from '../../store/mutation-types'
   export default {
-    props: ['model', 'isEditing'],
+    props: ['model', 'categories', 'isEditing'],
     created () {
 
     },
@@ -95,8 +95,8 @@
         }).catch(() => {
           this.$store.commit(ERROR_MSG, {
             type: 'error',
-            title: 'Validation!',
-            content: 'Please ensure the form is valid.'
+            title: 'Validação!',
+            content: 'Certifique-se de que o formulário seja válido.'
           })
         })
       }

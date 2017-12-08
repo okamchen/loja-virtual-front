@@ -1,13 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { productGetters, userGetters } from './getters'
-import { productMutations, cartMutations, userMutations } from './mutations'
-import { productActions, userActions } from './actions'
+import { productGetters, userGetters, categoryGetters } from './getters'
+import { productMutations, cartMutations, userMutations, categoryMutations } from './mutations'
+import { productActions, userActions, categoryActions } from './actions'
 
 Vue.use(Vuex)
-
-//     image: 'http://www.brandsmartusa.com/images/product/large/20208018.jpg',
 
 export default new Vuex.Store({
   strict: true,
@@ -16,9 +14,10 @@ export default new Vuex.Store({
     showLoader: false,
     product: {},
     products: [],
-    users: []
+    users: [],
+    categories: []
   },
-  mutations: Object.assign({}, productMutations, cartMutations, userMutations),
-  getters: Object.assign({}, productGetters, userGetters),
-  actions: Object.assign({}, productActions, userActions)
+  mutations: Object.assign({}, productMutations, cartMutations, userMutations, categoryMutations),
+  getters: Object.assign({}, productGetters, userGetters, categoryGetters),
+  actions: Object.assign({}, productActions, userActions, categoryActions)
 })

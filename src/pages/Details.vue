@@ -24,7 +24,6 @@
     },
     data () {
       return {
-//        product: this.$store.getters.productById(this.$route.params['id'])
       }
     },
     components: {

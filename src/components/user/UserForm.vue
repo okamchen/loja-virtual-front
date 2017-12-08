@@ -23,25 +23,9 @@
           :class="{'form-control': true, 'error': errors.has('type') }" />
         <span class="small text-danger" v-show="errors.has('type')">Perfil é obrigatório</span>
       </div>
-      <!-- <div class="form-group">
-
-        <label>Manufacturer</label>
-        <select
-          type="text"
-          class="form-control"
-          v-model="model.manufacturer"
-          v-validate="'required'"
-          name="manufacturer"
-          :class="{'form-control': true, 'error': errors.has('manufacturer') }">
-          <template v-for="manufacturer in manufacturers">
-            <option :value="manufacturer._id" :selected="manufacturer._id == (model.manufacturer && model.manufacturer._id)">{{manufacturer.name}}</option>
-          </template>
-        </select>
-        <span class="small text-danger" v-show="errors.has('manufacturer')">Manufacturer is required</span>
-      </div> -->
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <!-- <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
       <div class="form-group">
         <label>Image</label>
         <input
@@ -53,7 +37,7 @@
           name="image"
           :class="{'form-control': true, 'error': errors.has('image') }" />
         <span class="small text-danger" v-show="errors.has('image')">Imagem é obrigatório e URL deve ser válida</span>
-      </div>
+      </div> -->
       <div class="form-group new-button">
         <button class="button">
           <i class="fa fa-pencil"></i>
@@ -70,7 +54,6 @@
     ERROR_MSG
   } from '../../store/mutation-types'
   export default {
-    // props: ['model', 'manufacturers', 'isEditing'],
     props: ['model', 'isEditing'],
     created () {
 
@@ -82,7 +65,7 @@
         }).catch(() => {
           this.$store.commit(ERROR_MSG, {
             type: 'error',
-            title: 'Validation!',
+            title: 'Validação!',
             content: 'Certifique-se de que o formulário seja válido.'
           })
         })
