@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">
-      <h1><i class="fa fa-braille"></i> In Stock</h1>
+      <h1><i class="fa fa-shopping-basket"></i> Produtos</h1>
     </div>
     <product-list></product-list>
   </div>
@@ -13,7 +13,6 @@
     name: 'home',
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
       }
     },
     components: {
@@ -22,7 +21,6 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

@@ -15,7 +15,7 @@
         <td>{{product.name}}</td>
         <td>${{product.price}}</td>
         <td>{{product.category.name}}</td>
-        <td><router-link :to="'/product/edit/'+product.id"><i class="fa fa-pencil-square-o"></i></router-link></td>
+        <td><router-link :to="'/product/edit/'+product.id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></router-link></td>
         <td><a @click="deleteProduct(product.id)"><i class="fa fa-trash"></i></a></td>
       </tr>
       </tbody>

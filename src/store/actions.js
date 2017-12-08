@@ -74,7 +74,7 @@ export const productActions = {
   },
   addProduct ({commit}, payload) {
     commit(ADD_PRODUCT)
-    axios.post(`${API_BASE}/product`, POST_CORS, payload).then(response => {
+    axios.post(`${API_BASE}/product`, payload, POST_CORS).then(response => {
       commit(ADD_PRODUCT_SUCCESS, response.data)
     })
   },
@@ -95,25 +95,25 @@ export const productActions = {
 export const userActions = {
   allUsers ({commit}) {
     commit(ALL_USERS)
-    axios.get(`${API_BASE}/user`).then(response => {
+    axios.get(`${API_BASE}/user`, GET_CORS).then(response => {
       commit(ALL_USERS_SUCCESS, response.data)
     })
   },
   userById ({commit}, payload) {
     commit(USER_BY_ID)
-    axios.get(`${API_BASE}/user/${payload}`).then(response => {
+    axios.get(`${API_BASE}/user/${payload}`, GET_CORS).then(response => {
       commit(USER_BY_ID_SUCCESS, response.data)
     })
   },
   addUser ({commit}, payload) {
     commit(ADD_USER)
-    axios.post(`${API_BASE}/user`, payload).then(response => {
+    axios.post(`${API_BASE}/user`, payload, POST_CORS).then(response => {
       commit(ADD_USER_SUCCESS, response.data)
     })
   },
   updateUser ({commit}, payload) {
     commit(UPDATE_USER)
-    axios.put(`${API_BASE}/user/${payload.id}`, payload).then(response => {
+    axios.put(`${API_BASE}/user/${payload.id}`, payload, PUT_CORS).then(response => {
       commit(UPDATE_USER_SUCCESS, response.data)
     })
   },

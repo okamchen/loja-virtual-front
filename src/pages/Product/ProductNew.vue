@@ -24,12 +24,13 @@
         return this.$store.getters.allCategories
       },
       model () {
-        return Object.assign({})
+        return {}
       }
     },
     methods: {
       addProduct (model) {
         this.$store.dispatch('addProduct', model)
+        this.$router.push('/product')
       }
     },
     components: {

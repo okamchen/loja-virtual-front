@@ -13,6 +13,7 @@
     methods: {
       addUser (model) {
         this.$store.dispatch('addUser', model)
+        this.$router.push('/user')
       }
     },
     components: {

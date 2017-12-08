@@ -26,13 +26,14 @@
         return this.$store.getters.allCategories
       },
       model () {
-        const productById = this.$store.getters.productById(this.$route.params['id'])
-        return Object.assign({}, productById)
+        const product = this.$store.getters.productById(this.$route.params['id'])
+        return Object.assign({}, product)
       }
     },
     methods: {
       updateProduct (model) {
         this.$store.dispatch('updateProduct', model)
+        this.$router.push('/product')
       }
     },
     components: {

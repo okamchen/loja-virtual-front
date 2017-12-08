@@ -20,6 +20,8 @@ import {
   REMOVE_USER_SUCCESS,
   ALL_USERS,
   ALL_USERS_SUCCESS,
+  ADD_USER,
+  ADD_USER_SUCCESS,
   ALL_CATEGORIES,
   ALL_CATEGORIES_SUCCESS
 } from './mutation-types'
@@ -86,6 +88,13 @@ export const userMutations = {
     state.showLoader = false
     state.users = payload
   },
+  [ADD_USER]: (state, payload) => {
+    state.showLoader = true
+  },
+  [ADD_USER_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.users.push(payload)
+  },
   [USER_BY_ID] (state) {
     state.showLoader = true
   },
@@ -112,7 +121,7 @@ export const userMutations = {
   [REMOVE_USER_SUCCESS]: (state, payload) => {
     state.showLoader = false
     const index = state.users.findIndex(p => p.id === parseInt(payload))
-    state.products.splice(index, 1)
+    state.users.splice(index, 1)
   },
   [ERROR_MSG] (state, payload) {}
 }

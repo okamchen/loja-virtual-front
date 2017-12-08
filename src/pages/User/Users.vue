@@ -3,14 +3,18 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Nome</th>
+        <th>Login</th>
+        <th>E-mail</th>
+        <th>Profile</th>
         <th></th>
         <th></th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="user in users">
-        <td>{{user.name}}</td>
+        <td>{{user.login}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.profile}}</td>
         <td><router-link :to="'/user/edit/'+user.id"><i class="fa fa-pencil-square-o"></i></router-link></td>
         <td><a @click="deleteUser(user.id)"><i class="fa fa-trash"></i></a></td>
       </tr>

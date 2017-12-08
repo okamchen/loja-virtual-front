@@ -4,8 +4,8 @@
       <div class="container">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <ul class="product-menu">
-            <li><router-link to="/product">Listar</router-link></li>
-            <li><router-link to="/product/new">Novo</router-link></li>
+            <li><router-link to="/user">Listar</router-link></li>
+            <li><router-link to="/user/new">Novo</router-link></li>
           </ul>
         </div>
         <router-view></router-view>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav>
+    <nav :hidden="hiddenHeader">
       <div class="container">
         <ul class="nav__left">
           <li><router-link to="/"><i class="fa fa-home"></i> Home</router-link></li>
@@ -8,7 +8,10 @@
           <li><router-link to="/user"><i class="fa fa-user"></i> Usuario</router-link></li>
         </ul>
         <ul class="nav__right">
-          <li><router-link to="/cart"><i class="fa fa-shopping-cart"></i> Cart ({{cartItemsCount}})</router-link></li>
+          <li><router-link to="/cart"><i class="fa fa-shopping-cart"></i> Carrinho ({{cartItemsCount}})</router-link></li>
+        </ul>
+        <ul class="nav__right">
+          <login></login>
         </ul>
       </div>
     </nav>
@@ -32,11 +35,23 @@ import {
   UPDATE_PRODUCT_SUCCESS,
   REMOVE_PRODUCT_SUCCESS
 } from './store/mutation-types'
+
+import Login from './components/header/LoginHeader.vue'
+
 export default {
   name: 'app',
   data () {
     return {
-      cartItems: this.$store.state.cart
+      cartItems: this.$store.state.cart,
+      hiddenHeader: this.$route.path === '/login'
+    }
+  },
+  components: {
+    'login': Login
+  },
+  watch: {
+    '$route' (to, from) {
+      this.hiddenHeader = to.path === '/login'
     }
   },
   created () {

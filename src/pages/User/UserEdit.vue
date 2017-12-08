@@ -13,22 +13,17 @@
         this.$store.dispatch('userById', this.$route.params['id'])
       }
     },
-    data () {
-//      const productById = this.$store.getters.productById(this.$route.params['id'])
-      return {
-//        model: {}
-//        model: this.$store.getters.productById(this.$route.params['id'])
-      }
-    },
     computed: {
       model () {
-        const userById = this.$store.getters.userById(this.$route.params['id'])
-        return Object.assign({}, userById)
+        const model = this.$store.getters.userById(this.$route.params['id'])
+        model.password = ''
+        return Object.assign(model)
       }
     },
     methods: {
       updateUser (model) {
         this.$store.dispatch('updateUser', model)
+        this.$router.push('/user')
       }
     },
     components: {

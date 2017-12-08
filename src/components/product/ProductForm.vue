@@ -53,26 +53,26 @@
           v-validate="'required|url'"
           name="imageUrl"
           :class="{'form-control': true, 'error': errors.has('imageUrl') }" />
-        <span class="small text-danger" v-show="errors.has('imageUrl')">Image is required and must be a valid URL</span>
+        <span class="small text-danger" v-show="errors.has('imageUrl')">A imagem é obrigatório e deve ser um URL válido</span>
       </div>
       <div class="form-group">
-        <label>Description</label>
+        <label>Descrição</label>
         <textarea
           type="number"
           class="form-control"
-          placeholder="Description"
+          placeholder="Descrição"
           rows="5"
           v-model="model.description"
           v-validate="'required'"
           name="description"
           :class="{'form-control': true, 'error': errors.has('description') }"></textarea>
-        <span class="small text-danger" v-show="errors.has('description')">Description is required</span>
+        <span class="small text-danger" v-show="errors.has('description')">Descrição é obrigatório</span>
       </div>
       <div class="form-group new-button">
         <button class="button">
           <i class="fa fa-pencil"></i>
-          <span v-if="isEditing">Update Product</span>
-          <span v-else>Add Product</span>
+          <span v-if="isEditing">Salvar</span>
+          <span v-else>Adicionar</span>
         </button>
       </div>
     </div>
