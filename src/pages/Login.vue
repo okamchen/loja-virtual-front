@@ -23,7 +23,7 @@
                 <div class="form-group">
                   <input type="text" name="username" id="username" 
                     tabindex="1" class="form-control" placeholder="Usuário"
-                    v-model="user">
+                    v-model="username">
                 </div>
                 <div class="form-group">
                   <input type="password" name="password" id="password" tabindex="2" 
@@ -42,23 +42,39 @@
               </form>
               <form id="register-form" v-bind:style="styleRegister">
                 <div class="form-group">
-                  <input type="text" name="username" id="username" tabindex="1" 
-                    class="form-control" placeholder="Usuário" v-model="user">
+                  <input type="text" name="name" id="name" tabindex="1" 
+                    :class="{'form-control': true, 'error': errors.has('name') }"
+                    placeholder="Nome" v-model="name">
+                    <span class="small text-danger" v-show="errors.has('name')">Nome é obrigatório</span>
+                  </input>
                 </div>
                 <div class="form-group">
-                  <input type="email" name="email" id="email" 
-                    tabindex="1" class="form-control" placeholder="E-mail"
-                    v-model="email">
+                  <input type="text" name="username" id="username" tabindex="2" 
+                    minlength="6" placeholder="Login" v-model="username"
+                    :class="{'form-control': true, 'error': errors.has('username') }">
+                    <span class="small text-danger" v-show="errors.has('username')">Login é obrigatório</span>
+                  </input>
                 </div>
                 <div class="form-group">
-                  <input type="password" name="password" id="password" 
-                    tabindex="2" class="form-control" placeholder="Senha"
-                    v-model="password">
+                  <input type="text" name="email" id="email" tabindex="3" 
+                    placeholder="E-mail" v-model="email"
+                    :class="{'form-control': true, 'error': errors.has('email') }">
+                    <span class="small text-danger" v-show="errors.has('email')">Email é obrigatório</span>
+                  </input>
                 </div>
                 <div class="form-group">
-                  <input type="password" name="confirm-password" id="confirm-password" 
-                    tabindex="2" class="form-control" placeholder="Confirmar Senha"
-                    v-model="confirmPassword">
+                  <input type="password" name="password" id="login" tabindex="4" 
+                    placeholder="Senha" v-model="password"
+                    :class="{'form-control': true, 'error': errors.has('password') }">
+                    <span class="small text-danger" v-show="errors.has('password')">Senha é obrigatório</span>
+                  </input>
+                </div>
+                <div class="form-group">
+                  <input type="password" name="confirmPassword" id="login" tabindex="4" 
+                    placeholder="Confirmar Senha" v-model="confirmPassword"
+                    :class="{'form-control': true, 'error': errors.has('confirmPassword') }">
+                    <span class="small text-danger" v-show="errors.has('confirmPassword')">Confirmar Senha é obrigatório</span>
+                  </input>
                 </div>
                 <div class="form-group">
                   <div class="row">
@@ -80,12 +96,17 @@
 </template>
 
 <script>
+import {
+  ERROR_MSG
+} from '../store/mutation-types'
+
 export default {
   create () {
   },
   data () {
     return {
-      user: '',
+      name: '',
+      username: '',
       password: '',
       email: '',
       confirmPassword: '',
@@ -93,6 +114,11 @@ export default {
       styleLogin: 'display:block;',
       activeRegister: '',
       activeLogin: 'active'
+    }
+  },
+  computed: {
+    userLogged () {
+      return this.$store.getters.userLogged
     }
   },
   methods: {
@@ -109,20 +135,35 @@ export default {
       this.activeLogin = ''
     },
     login () {
+      var model = {
+        login: this.username,
+        password: this.password
+      }
+
+      this.$store.dispatch('userLogin', model).then(response => {
+        if (this.userLogged.login !== null) {
+          this.$router.push('/')
+        }
+      }, function () {
+
+      })
     },
     register () {
-      this.user
-      this.email
       if (this.password === this.confirmPassword) {
         var model = {
-          login: this.user,
+          name: this.name,
+          login: this.username,
           email: this.email,
           password: this.password
         }
         this.$store.dispatch('addUser', model)
         this.$router.push('/')
       } else {
-
+        this.$store.commit(ERROR_MSG, {
+          type: 'error',
+          title: 'Validação!',
+          content: 'Certifique-se de que a senha ou usuário estão corretos.'
+        })
       }
     }
   }

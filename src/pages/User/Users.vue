@@ -36,9 +36,7 @@
       }
     },
     created () {
-      if (this.users.length === 0) {
-        this.$store.dispatch('allUsers')
-      }
+      this.$store.dispatch('allUsers')
     },
     methods: {
       deleteUser (id) {

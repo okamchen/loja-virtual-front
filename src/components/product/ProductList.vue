@@ -15,9 +15,7 @@
   export default {
     name: 'product-list',
     created () {
-      if (this.products.length === 0) {
-        this.$store.dispatch('allProducts')
-      }
+      this.$store.dispatch('allProducts')
     },
     computed: {
       products () {

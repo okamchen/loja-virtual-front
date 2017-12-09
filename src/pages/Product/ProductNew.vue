@@ -14,7 +14,6 @@
       }
     },
     created () {
-      this.$store.dispatch('allCategories')
       if (this.categories.length === 0) {
         this.$store.dispatch('allCategories')
       }

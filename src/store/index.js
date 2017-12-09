@@ -15,7 +15,8 @@ export default new Vuex.Store({
     product: {},
     products: [],
     users: [],
-    categories: []
+    categories: [],
+    userLogged: {}
   },
   mutations: Object.assign({}, productMutations, cartMutations, userMutations, categoryMutations),
   getters: Object.assign({}, productGetters, userGetters, categoryGetters),

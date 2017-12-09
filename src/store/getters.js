@@ -22,6 +22,11 @@ export const userGetters = {
     } else {
       return state.user
     }
+  },
+  userLogged: (state, getters) => {
+    console.log('getters')
+    console.log(state.userLogged)
+    return state.userLogged
   }
 }
 

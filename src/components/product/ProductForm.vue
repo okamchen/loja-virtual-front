@@ -5,7 +5,7 @@
         <label>Nome</label>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Nome"
           v-model="model.name"
           v-validate="'required'"
           name="name"
@@ -18,7 +18,7 @@
           type="number"
           step="0.01"
           class="form-control"
-          placeholder="Price"
+          placeholder="Preço"
           v-model="model.price"
           v-validate="'required'"
           name="price"
@@ -39,6 +39,18 @@
           </template>
         </select>
         <span class="small text-danger" v-show="errors.has('manufacturer')">Categoria é obrigatório</span>
+      </div>
+      <div class="form-group">
+        <label>Data de Válidade</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Data de Válidade"
+          v-model="model.expirationDate"
+          v-validate="'required'"
+          name="expirationDate"
+          :class="{'form-control': true, 'error': errors.has('expirationDate') }" />
+        <span class="small text-danger" v-show="errors.has('expirationDate')">Data de Válidade é obrigatório</span>
       </div>
     </div>
 
@@ -76,17 +88,18 @@
         </button>
       </div>
     </div>
+    <product-price-history :historicPrice="model.historicPrice"></product-price-history/>
   </form>
 </template>
 
 <script>
-  import {
-    ERROR_MSG
-  } from '../../store/mutation-types'
+  import { ERROR_MSG } from '../../store/mutation-types'
+  import ProductPriceHistory from '../../components/product/ProductPriceHistory.vue'
   export default {
     props: ['model', 'categories', 'isEditing'],
     created () {
-
+      return {
+      }
     },
     methods: {
       saveProduct () {
@@ -100,6 +113,16 @@
           })
         })
       }
+    },
+    components: {
+      'product-price-history': ProductPriceHistory
     }
   }
 </script>
+
+<style>
+.title {
+  text-align: center;
+}
+</style>
+

@@ -23,7 +23,9 @@ import {
   ALL_USERS,
   ALL_USERS_SUCCESS,
   ALL_CATEGORIES,
-  ALL_CATEGORIES_SUCCESS
+  ALL_CATEGORIES_SUCCESS,
+  LOGIN,
+  LOGIN_SUCCESS
 } from './mutation-types'
 
 let GET_CORS = {
@@ -81,6 +83,8 @@ export const productActions = {
   updateProduct ({commit}, payload) {
     commit(UPDATE_PRODUCT)
     axios.put(`${API_BASE}/product/${payload.id}`, payload, PUT_CORS).then(response => {
+      console.log('update product')
+      console.log(response.data)
       commit(UPDATE_PRODUCT_SUCCESS, response.data)
     })
   },
@@ -97,6 +101,17 @@ export const userActions = {
     commit(ALL_USERS)
     axios.get(`${API_BASE}/user`, GET_CORS).then(response => {
       commit(ALL_USERS_SUCCESS, response.data)
+    })
+  },
+  userLogin ({commit}, payload) {
+    commit(LOGIN)
+    return new Promise((resolve, reject) => {
+      axios.post(`${API_BASE}/user/login`, payload, POST_CORS).then(response => {
+        resolve(response)
+        commit(LOGIN_SUCCESS, response.data)
+      }, error => {
+        reject(error)
+      })
     })
   },
   userById ({commit}, payload) {

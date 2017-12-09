@@ -23,7 +23,9 @@ import {
   ADD_USER,
   ADD_USER_SUCCESS,
   ALL_CATEGORIES,
-  ALL_CATEGORIES_SUCCESS
+  ALL_CATEGORIES_SUCCESS,
+  LOGIN,
+  LOGIN_SUCCESS
 } from './mutation-types'
 
 export const productMutations = {
@@ -93,7 +95,15 @@ export const userMutations = {
   },
   [ADD_USER_SUCCESS]: (state, payload) => {
     state.showLoader = false
+    state.userLogged = payload
     state.users.push(payload)
+  },
+  [LOGIN]: (state, payload) => {
+    state.showLoader = true
+  },
+  [LOGIN_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.userLogged = payload
   },
   [USER_BY_ID] (state) {
     state.showLoader = true

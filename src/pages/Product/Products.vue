@@ -36,9 +36,7 @@
       }
     },
     created () {
-      if (this.products.length === 0) {
-        this.$store.dispatch('allProducts')
-      }
+      this.$store.dispatch('allProducts')
     },
     methods: {
       deleteProduct (id) {

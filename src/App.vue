@@ -4,14 +4,13 @@
       <div class="container">
         <ul class="nav__left">
           <li><router-link to="/"><i class="fa fa-home"></i> Home</router-link></li>
-          <li><router-link to="/product"><i class="fa fa-user"></i> Produtos</router-link></li>
-          <li><router-link to="/user"><i class="fa fa-user"></i> Usuario</router-link></li>
+          <li v-if="getUserLogged.profile === 'ADMIN'"><router-link to="/product"><i class="fa fa-user"></i> Produtos</router-link></li>
+          <li v-if="getUserLogged.profile === 'ADMIN'"><router-link to="/user"><i class="fa fa-user"></i> Usuario</router-link></li>
         </ul>
         <ul class="nav__right">
+          <li v-if="getUserLogged.login"><span><i @click="logout" class="logout fa fa-sign-out"></i> Logout</span></li>
+          <login :userLogged="getUserLogged"></login>
           <li><router-link to="/cart"><i class="fa fa-shopping-cart"></i> Carrinho ({{cartItemsCount}})</router-link></li>
-        </ul>
-        <ul class="nav__right">
-          <login></login>
         </ul>
       </div>
     </nav>
@@ -43,7 +42,8 @@ export default {
   data () {
     return {
       cartItems: this.$store.state.cart,
-      hiddenHeader: this.$route.path === '/login'
+      hiddenHeader: this.$route.path === '/login',
+      userLogged: {}
     }
   },
   components: {
@@ -52,6 +52,9 @@ export default {
   watch: {
     '$route' (to, from) {
       this.hiddenHeader = to.path === '/login'
+    },
+    '$store.state.userLogged' (newVal) {
+      this.userLogged = newVal
     }
   },
   created () {
@@ -75,11 +78,21 @@ export default {
     })
   },
   computed: {
+    getUserLogged () {
+      return this.userLogged
+    },
+    setUserLogged (newVal) {
+      this.userLogged = newVal
+    },
     cartItemsCount () {
       return this.cartItems.length
     },
     showLoader () {
       return this.$store.state.showLoader
+    }
+  },
+  methods: {
+    logout () {
     }
   }
 }
