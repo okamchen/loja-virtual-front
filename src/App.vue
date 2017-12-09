@@ -55,9 +55,14 @@ export default {
     },
     '$store.state.userLogged' (newVal) {
       this.userLogged = newVal
+      localStorage.setItem('userLogged', JSON.stringify(newVal))
     }
   },
   created () {
+    var userStorange = JSON.parse(localStorage.getItem('userLogged'))
+    if (userStorange) {
+      this.userLogged = userStorange
+    }
     this.$store.subscribe((mutation) => {
       if (mutation.payload) {
         switch (mutation.type) {

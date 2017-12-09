@@ -10,7 +10,7 @@
       </thead>
       <tbody>
       <tr v-for="historic in historicPrice">
-        <td>{{historic.amount}}</td>
+        <td>{{historic.value}}</td>
         <td>{{historic.dateUpdate}}</td>
       </tr>
       </tbody>

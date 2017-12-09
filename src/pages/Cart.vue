@@ -26,6 +26,7 @@
     },
     methods: {
       closeOrder () {
+        console.log(this.cart)
       }
     }
   }
