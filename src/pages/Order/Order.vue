@@ -17,8 +17,8 @@
         <td>{{order.situation}}</td>
         <td>${{order.totalPrice}}</td>
         <td class="center"><router-link :to="'/order/detail/'+order.id"><i class="fa fa-info-circle" aria-hidden="true"></i></router-link></td>
-        <td class="center" v-if="showRemove"><a @click="approvedOrder(order.id)"><i class="fa fa-trash"></i></a></td>
-        <td class="center" v-if="showAuthorize"><a @click="approvedOrder(order.id)"><i class="fa fa-check"></i></a></td>
+        <td class="center" v-if="showRemove"><a @click="removeOrder(order.id)"><i class="fa fa-trash"></i></a></td>
+        <td class="center" v-if="showAuthorize"><a @click="authorizeOrder(order.id)"><i class="fa fa-check"></i></a></td>
       </tr>
       </tbody>
     </table>
@@ -49,8 +49,29 @@
       }
     },
     methods: {
-      approvedOrder (id) {
-        this.$store.dispatch('approvedOrder', id)
+      authorizeOrder (id) {
+        var userLogged
+        var userStorange = localStorage.getItem('userLogged')
+        if (userStorange !== 'undefined') 
+          var userLogged = JSON.parse(userStorange)
+          
+        var payload = {
+          idOrder: id,
+          user: userLogged
+        }
+        this.$store.dispatch('authorizeOrder', payload)
+      },
+      removeOrder (id) {
+        var userLogged
+        var userStorange = localStorage.getItem('userLogged')
+        if (userStorange !== 'undefined') 
+          var userLogged = JSON.parse(userStorange)
+
+        var payload = {
+          idOrder: id,
+          user: userLogged
+        }
+        this.$store.dispatch('removeOrder', id)
       }
     }
   }

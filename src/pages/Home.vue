@@ -38,7 +38,6 @@
   export default {
     name: 'home',
     create () {
-      console.log('allProduts')
     },
     data () {
       return {

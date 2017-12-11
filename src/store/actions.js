@@ -33,7 +33,11 @@ import {
   ALL_ORDERS,
   GET_ORDER,
   ERROR_MSG,
-  GET_ORDER_SUCCESS
+  GET_ORDER_SUCCESS,
+  AUTHORIZE_ORDER,
+  AUTHORIZE_ORDER_SUCCESS,
+  REMOVE_ORDER,
+  REMOVE_ORDER_SUCCESS
 } from './mutation-types'
 
 let GET_CORS = {
@@ -72,7 +76,6 @@ let PUT_CORS = {
 export const productActions = {
   allProducts ({commit}, payload) {
     commit(ALL_PRODUCTS)
-    console.log(payload)
     axios.get(`${API_BASE}/product/filter/` + payload.idCategory + '/' + payload.order, GET_CORS).then(response => {
       commit(ALL_PRODUCTS_SUCCESS, response.data)
     }).catch(error => commit(ERROR_MSG, {
@@ -214,6 +217,26 @@ export const orderActions = {
     commit(GET_ORDER)
     axios.get(`${API_BASE}/order/detail/` + payload).then(response => {
       commit(GET_ORDER_SUCCESS, response.data)
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
+  },
+  authorizeOrder ({commit}, payload) {
+    commit(AUTHORIZE_ORDER)
+    axios.post(`${API_BASE}/order/authorize/` + payload.idOrder, payload.user).then(response => {
+      commit(AUTHORIZE_ORDER_SUCCESS, response.data)
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
+  },
+  removeOrder ({commit}, payload) {
+    commit(REMOVE_ORDER)
+    axios.delete(`${API_BASE}/order/remove/` + payload.idOrder, payload.user).then(response => {
+      commit(REMOVE_ORDER_SUCCESS, response.data)
     }).catch(error => commit(ERROR_MSG, {
       type: 'error',
       title: 'Exceção!',

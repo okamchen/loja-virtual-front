@@ -32,7 +32,11 @@ import {
   ALL_ORDERS,
   ALL_ORDERS_SUCCESS,
   GET_ORDER,
-  GET_ORDER_SUCCESS
+  GET_ORDER_SUCCESS,
+  AUTHORIZE_ORDER_SUCCESS,
+  AUTHORIZE_ORDER,
+  REMOVE_ORDER_SUCCESS,
+  REMOVE_ORDER
 } from './mutation-types'
 
 export const productMutations = {
@@ -87,6 +91,20 @@ export const orderMutations = {
     state.showLoader = true
   },
   [CLOSE_ORDER_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.cart = []
+  },
+  [AUTHORIZE_ORDER]: (state, payload) => {
+    state.showLoader = true
+  },
+  [AUTHORIZE_ORDER_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.cart = []
+  },
+  [REMOVE_ORDER]: (state, payload) => {
+    state.showLoader = true
+  },
+  [REMOVE_ORDER_SUCCESS]: (state, payload) => {
     state.showLoader = false
     state.cart = []
   },
