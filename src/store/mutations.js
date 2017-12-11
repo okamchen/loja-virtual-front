@@ -25,7 +25,14 @@ import {
   ALL_CATEGORIES,
   ALL_CATEGORIES_SUCCESS,
   LOGIN,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  CLOSE_ORDER,
+  CLOSE_ORDER_SUCCESS,
+  SET_USER,
+  ALL_ORDERS,
+  ALL_ORDERS_SUCCESS,
+  GET_ORDER,
+  GET_ORDER_SUCCESS
 } from './mutation-types'
 
 export const productMutations = {
@@ -71,7 +78,34 @@ export const productMutations = {
     const index = state.products.findIndex(p => p.id === parseInt(payload))
     state.products.splice(index, 1)
   },
-  [ERROR_MSG] (state, payload) {}
+  [ERROR_MSG]: (state, payload) => {
+  }
+}
+
+export const orderMutations = {
+  [CLOSE_ORDER]: (state, payload) => {
+    state.showLoader = true
+  },
+  [CLOSE_ORDER_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.cart = []
+  },
+  [ALL_ORDERS]: (state, payload) => {
+    state.showLoader = true
+  },
+  [ALL_ORDERS_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.orders = payload
+  },
+  [GET_ORDER]: (state, payload) => {
+    state.showLoader = true
+  },
+  [GET_ORDER_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.order = payload
+  },
+  [ERROR_MSG]: (state, payload) => {
+  }
 }
 
 export const cartMutations = {
@@ -79,6 +113,8 @@ export const cartMutations = {
   [REMOVE_FROM_CART]: (state, payload) => {
     const index = state.cart.findIndex(p => p.id === parseInt(payload))
     state.cart.splice(index, 1)
+  },
+  [ERROR_MSG]: (state, payload) => {
   }
 }
 
@@ -97,6 +133,9 @@ export const userMutations = {
     state.showLoader = false
     state.userLogged = payload
     state.users.push(payload)
+  },
+  [SET_USER]: (state, payload) => {
+    state.userLogged = payload
   },
   [LOGIN]: (state, payload) => {
     state.showLoader = true
@@ -133,7 +172,8 @@ export const userMutations = {
     const index = state.users.findIndex(p => p.id === parseInt(payload))
     state.users.splice(index, 1)
   },
-  [ERROR_MSG] (state, payload) {}
+  [ERROR_MSG]: (state, payload) => {
+  }
 }
 
 export const categoryMutations = {
@@ -143,5 +183,7 @@ export const categoryMutations = {
   [ALL_CATEGORIES_SUCCESS] (state, payload) {
     state.showLoader = false
     state.categories = payload
+  },
+  [ERROR_MSG]: (state, payload) => {
   }
 }

@@ -2,16 +2,18 @@
   <div id="app">
     <nav :hidden="hiddenHeader">
       <div class="container">
-        <ul class="nav__left">
-          <li><router-link to="/"><i class="fa fa-home"></i> Home</router-link></li>
-          <li v-if="getUserLogged.profile === 'ADMIN'"><router-link to="/product"><i class="fa fa-user"></i> Produtos</router-link></li>
-          <li v-if="getUserLogged.profile === 'ADMIN'"><router-link to="/user"><i class="fa fa-user"></i> Usuario</router-link></li>
-        </ul>
-        <ul class="nav__right">
-          <li v-if="getUserLogged.login"><span><i @click="logout" class="logout fa fa-sign-out"></i> Logout</span></li>
-          <login :userLogged="getUserLogged"></login>
-          <li><router-link to="/cart"><i class="fa fa-shopping-cart"></i> Carrinho ({{cartItemsCount}})</router-link></li>
-        </ul>
+        <div class="nav__left">
+          <div class="menu-option"><router-link to="/"><i class="fa fa-home"></i> Home</router-link></div>
+          <div class="menu-option" v-if="getUserLogged && getUserLogged.login"><router-link to="/order"><i class="fa fa-shopping-basket"></i> Pedidos</router-link></div>
+          <div class="menu-option" v-if="getUserLogged && getUserLogged.profile === 'ADMIN'"><router-link to="/product"><i class="fa fa-tags"></i> Produtos</router-link></div>
+          <div class="menu-option" v-if="getUserLogged && getUserLogged.profile === 'ADMIN'"><router-link to="/user"><i class="fa fa-user"></i> Usuario</router-link></div>
+        </div>
+        <div class="nav__right">
+          <div class="menu-option" v-if="getUserLogged && getUserLogged.login"><router-link to="/logout"><i class="fa fa-snowflake-o"></i> Logout</router-link></div>
+          <div class="menu-option" v-if="getUserLogged && getUserLogged.login"><span class="login-name">{{userLogged.name}} <i class="fa fa-user-circle"></i></span></div>
+          <div class="menu-option" v-if="!getUserLogged || !getUserLogged.login"><router-link to="/login"><i class="fa fa-user-circle"></i> Login</router-link></div>
+          <div class="menu-option"><router-link to="/cart"><i class="fa fa-shopping-cart"></i> Carrinho ({{cartItemsCount}})</router-link></div>
+        </div>
       </div>
     </nav>
     <router-view></router-view>
@@ -32,10 +34,9 @@ import {
   ERROR_MSG,
   ADD_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_SUCCESS,
-  REMOVE_PRODUCT_SUCCESS
+  REMOVE_PRODUCT_SUCCESS,
+  CLOSE_ORDER_SUCCESS
 } from './store/mutation-types'
-
-import Login from './components/header/LoginHeader.vue'
 
 export default {
   name: 'app',
@@ -46,12 +47,13 @@ export default {
       userLogged: {}
     }
   },
-  components: {
-    'login': Login
-  },
   watch: {
     '$route' (to, from) {
       this.hiddenHeader = to.path === '/login'
+      if (to.path === '/logout') {
+        this.logout()
+        window.location.replace('/')
+      }
     },
     '$store.state.userLogged' (newVal) {
       this.userLogged = newVal
@@ -59,9 +61,11 @@ export default {
     }
   },
   created () {
-    var userStorange = JSON.parse(localStorage.getItem('userLogged'))
-    if (userStorange) {
-      this.userLogged = userStorange
+    var userStorange = localStorage.getItem('userLogged')
+    if (userStorange !== 'undefined') {
+      var userJson = JSON.parse(userStorange)
+      this.userLogged = userJson
+      this.$store.dispatch('setUser', userJson)
     }
     this.$store.subscribe((mutation) => {
       if (mutation.payload) {
@@ -77,6 +81,9 @@ export default {
             break
           case REMOVE_PRODUCT_SUCCESS:
             toastr.warning('Produto removido.', 'Removido!')
+            break
+          case CLOSE_ORDER_SUCCESS:
+            toastr.success('Pedido concluído.', 'Sucesso!')
             break
         }
       }
@@ -98,12 +105,22 @@ export default {
   },
   methods: {
     logout () {
+      localStorage.setItem('userLogged', undefined)
+      this.$store.dispatch('setUser', undefined)
     }
   }
 }
 </script>
 
 <style>
+  .login-name {
+    color: #FFFFFF;
+    display: block;
+    transition: all 150ms ease-out;
+  }
+  .logout-action {
+    color: #FFFFFF;
+  }
   .overlay {
     background: rgba(255, 255, 255, 0.6);
     position: absolute;

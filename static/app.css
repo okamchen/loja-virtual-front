@@ -7,6 +7,21 @@ html, body {
   font-family: 'Raleway', sans-serif;
 }
 
+.menu-option {
+  padding: 15px 15px;
+  list-style-type: none;
+  display: block;
+}
+
+.menu-option  a {
+  color: #FFFFFF;
+}
+
+.menu-option a:hover {
+  text-decoration: none;
+  color: #A6A6A6;
+}
+
 ul {
   list-style-type: none;
   margin: 0;

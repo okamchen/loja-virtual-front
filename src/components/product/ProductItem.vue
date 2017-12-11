@@ -33,7 +33,7 @@
   }
 </script>
 
-<style>
+<style scope>
   .product {
     background: #FFF;
     margin-bottom: 30px;

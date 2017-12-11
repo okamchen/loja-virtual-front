@@ -24,8 +24,6 @@ export const userGetters = {
     }
   },
   userLogged: (state, getters) => {
-    console.log('getters')
-    console.log(state.userLogged)
     return state.userLogged
   }
 }
@@ -33,5 +31,14 @@ export const userGetters = {
 export const categoryGetters = {
   allCategories: (state, getters) => {
     return state.categories
+  }
+}
+
+export const orderGetters = {
+  allOrders: (state, getters) => {
+    return state.orders
+  },
+  getOrder: (state, getters) => {
+    return state.order
   }
 }

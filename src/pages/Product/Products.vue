@@ -3,8 +3,8 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Name</th>
-        <th>Price</th>
+        <th>Nome</th>
+        <th>Preço</th>
         <th>Categoria</th>
         <th></th>
         <th></th>
@@ -36,7 +36,7 @@
       }
     },
     created () {
-      this.$store.dispatch('allProducts')
+      this.$store.dispatch('allProducts', {order: 'asc', idCategoty: 0})
     },
     methods: {
       deleteProduct (id) {

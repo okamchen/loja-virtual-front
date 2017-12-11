@@ -38,7 +38,7 @@
             <option :value="category">{{category.name}}</option>
           </template>
         </select>
-        <span class="small text-danger" v-show="errors.has('manufacturer')">Categoria é obrigatório</span>
+        <span class="small text-danger" v-show="errors.has('category')">Categoria é obrigatório</span>
       </div>
       <div class="form-group">
         <label>Data de Válidade</label>
@@ -104,7 +104,15 @@
     methods: {
       saveProduct () {
         this.$validator.validateAll().then(() => {
-          this.$emit('save-product', this.model)
+          if (!this.model.category || !this.model.category.id || this.model.category.id === 0) {
+            this.$store.commit(ERROR_MSG, {
+              type: 'error',
+              title: 'Validação!',
+              content: 'Categoria deve ser informada.'
+            })
+          } else {
+            this.$emit('save-product', this.model)
+          }
         }).catch(() => {
           this.$store.commit(ERROR_MSG, {
             type: 'error',

@@ -14,21 +14,26 @@
   import ProductItem from './ProductItem.vue'
   export default {
     name: 'product-list',
-    created () {
-      this.$store.dispatch('allProducts')
+    props: ['category', 'order'],
+    data () {
+      return {}
+    },
+    create () {
+      var idCategory = !this.category || this.category.id ? 0 : this.category.id
+      var order = !this.order ? 'asc' : this.order
+      var payload = {
+        idCategory,
+        order
+      }
+      this.$store.dispatch('allProducts', payload)
+    },
+    components: {
+      'product-item': ProductItem
     },
     computed: {
       products () {
         return this.$store.getters.allProducts
       }
-    },
-    data () {
-      return {
-
-      }
-    },
-    components: {
-      'product-item': ProductItem
     }
   }
 </script>

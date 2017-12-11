@@ -25,7 +25,15 @@ import {
   ALL_CATEGORIES,
   ALL_CATEGORIES_SUCCESS,
   LOGIN,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  CLOSE_ORDER,
+  CLOSE_ORDER_SUCCESS,
+  SET_USER,
+  ALL_ORDERS_SUCCESS,
+  ALL_ORDERS,
+  GET_ORDER,
+  ERROR_MSG,
+  GET_ORDER_SUCCESS
 } from './mutation-types'
 
 let GET_CORS = {
@@ -62,37 +70,56 @@ let PUT_CORS = {
 }
 
 export const productActions = {
-  allProducts ({commit}) {
+  allProducts ({commit}, payload) {
     commit(ALL_PRODUCTS)
-    axios.get(`${API_BASE}/product`, GET_CORS).then(response => {
+    console.log(payload)
+    axios.get(`${API_BASE}/product/filter/` + payload.idCategory + '/' + payload.order, GET_CORS).then(response => {
       commit(ALL_PRODUCTS_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   productById ({commit}, payload) {
     commit(PRODUCT_BY_ID)
     axios.get(`${API_BASE}/product/${payload}`, GET_CORS).then(response => {
       commit(PRODUCT_BY_ID_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   addProduct ({commit}, payload) {
     commit(ADD_PRODUCT)
     axios.post(`${API_BASE}/product`, payload, POST_CORS).then(response => {
       commit(ADD_PRODUCT_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   updateProduct ({commit}, payload) {
     commit(UPDATE_PRODUCT)
     axios.put(`${API_BASE}/product/${payload.id}`, payload, PUT_CORS).then(response => {
-      console.log('update product')
-      console.log(response.data)
       commit(UPDATE_PRODUCT_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   removeProduct ({commit}, payload) {
     commit(REMOVE_PRODUCT)
     axios.delete(`${API_BASE}/product/${payload}`, payload).then(response => {
       commit(REMOVE_PRODUCT_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   }
 }
 
@@ -101,42 +128,97 @@ export const userActions = {
     commit(ALL_USERS)
     axios.get(`${API_BASE}/user`, GET_CORS).then(response => {
       commit(ALL_USERS_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   userLogin ({commit}, payload) {
     commit(LOGIN)
-    return new Promise((resolve, reject) => {
-      axios.post(`${API_BASE}/user/login`, payload, POST_CORS).then(response => {
-        resolve(response)
-        commit(LOGIN_SUCCESS, response.data)
-      }, error => {
-        reject(error)
-      })
-    })
+    axios.post(`${API_BASE}/user/login`, payload, POST_CORS).then(response => {
+      commit(LOGIN_SUCCESS, response.data)
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   userById ({commit}, payload) {
     commit(USER_BY_ID)
     axios.get(`${API_BASE}/user/${payload}`, GET_CORS).then(response => {
       commit(USER_BY_ID_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   addUser ({commit}, payload) {
     commit(ADD_USER)
     axios.post(`${API_BASE}/user`, payload, POST_CORS).then(response => {
       commit(ADD_USER_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   updateUser ({commit}, payload) {
     commit(UPDATE_USER)
     axios.put(`${API_BASE}/user/${payload.id}`, payload, PUT_CORS).then(response => {
       commit(UPDATE_USER_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   },
   removeUser ({commit}, payload) {
     commit(REMOVE_USER)
     axios.delete(`${API_BASE}/user/${payload}`, payload).then(response => {
       commit(REMOVE_USER_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
+  },
+  setUser ({commit}, payload) {
+    commit(SET_USER, payload)
+  }
+}
+
+export const orderActions = {
+  closeOrder ({commit}, payload) {
+    commit(CLOSE_ORDER)
+    axios.post(`${API_BASE}/order`, payload).then(response => {
+      commit(CLOSE_ORDER_SUCCESS, response.data)
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
+  },
+  allOrders ({commit}, payload) {
+    commit(ALL_ORDERS)
+    axios.get(`${API_BASE}/order/` + payload).then(response => {
+      commit(ALL_ORDERS_SUCCESS, response.data)
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
+  },
+  getOrder ({commit}, payload) {
+    commit(GET_ORDER)
+    axios.get(`${API_BASE}/order/detail/` + payload).then(response => {
+      commit(GET_ORDER_SUCCESS, response.data)
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   }
 }
 
@@ -145,6 +227,10 @@ export const categoryActions = {
     commit(ALL_CATEGORIES)
     axios.get(`${API_BASE}/category`, GET_CORS).then(response => {
       commit(ALL_CATEGORIES_SUCCESS, response.data)
-    })
+    }).catch(error => commit(ERROR_MSG, {
+      type: 'error',
+      title: 'Exceção!',
+      content: error
+    }))
   }
 }

@@ -26,7 +26,16 @@
     },
     methods: {
       closeOrder () {
-        console.log(this.cart)
+        if (!this.$store.state.userLogged.login) {
+          this.$router.push('/login')
+        } else {
+          var order = {
+            client: this.$store.state.userLogged,
+            products: this.cart
+          }
+          this.$store.dispatch('closeOrder', order)
+          this.$router.push('/order')
+        }
       }
     }
   }
@@ -36,5 +45,6 @@
 .close-order {
   padding-top: 10px;
   text-align: center;
+  margin-bottom: 10px;
 }
 </style>
