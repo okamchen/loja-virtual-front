@@ -40,21 +40,29 @@
         return this.$store.getters.allOrders
       },
       showRemove () {
-        var userStorange = JSON.parse(localStorage.getItem('userLogged'))
-        return userStorange.profile !== 'ADMIN'
+        var userLogged
+        var userStorange = localStorage.getItem('userLogged')
+        if (userStorange !== 'undefined') {
+          userLogged = JSON.parse(userStorange)
+        }
+        return userLogged && userLogged.profile === 'ADMIN'
       },
       showAuthorize () {
-        var userStorange = JSON.parse(localStorage.getItem('userLogged'))
-        return userStorange.profile === 'ADMIN'
+        var userLogged
+        var userStorange = localStorage.getItem('userLogged')
+        if (userStorange !== 'undefined') {
+          userLogged = JSON.parse(userStorange)
+        }
+        return userLogged && userLogged.profile === 'ADMIN'
       }
     },
     methods: {
       authorizeOrder (id) {
         var userLogged
         var userStorange = localStorage.getItem('userLogged')
-        if (userStorange !== 'undefined') 
-          var userLogged = JSON.parse(userStorange)
-          
+        if (userStorange !== 'undefined') {
+          userLogged = JSON.parse(userStorange)
+        }
         var payload = {
           idOrder: id,
           user: userLogged
@@ -64,14 +72,14 @@
       removeOrder (id) {
         var userLogged
         var userStorange = localStorage.getItem('userLogged')
-        if (userStorange !== 'undefined') 
-          var userLogged = JSON.parse(userStorange)
-
+        if (userStorange !== 'undefined') {
+          userLogged = JSON.parse(userStorange)
+        }
         var payload = {
           idOrder: id,
           user: userLogged
         }
-        this.$store.dispatch('removeOrder', id)
+        this.$store.dispatch('removeOrder', payload)
       }
     }
   }
